@@ -6,5 +6,7 @@
   "background": {
     "scripts": ["background.js"]
   },
+  "icons": {"128": "footab128.png"},
+  "homepage_url": "http://sourceforge.net/projects/footab/",
   "manifest_version": 2
 }

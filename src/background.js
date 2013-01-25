@@ -38,7 +38,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(info) {
 //	console.log(info.tabId+' webrq: '+active);
 	if (!active)
 		return;
-	setTimeout(function(){active = false;}, 3000);
+	setTimeout(function(){active = false;}, 10000);
 	var tid = 't'+info.tabId;
 	if (tid == activated)
 		return;

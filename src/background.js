@@ -1,8 +1,19 @@
 // Copyright (c) 2013 mike_sf@outlook.com. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+const ftInactive = "ftInactive";
+const ftTimeout = 10000;
+
 var activated = null;
 var active = false;
+
+function ftDeactivate()
+{
+	active = false;
+	var s = new Object();
+	s[ftInactive] = true;
+	chrome.storage.local.set(s);
+}
 
 chrome.tabs.onActivated.addListener(function(info) {
 //	console.log(info.tabId+' act: '+active);
@@ -15,7 +26,6 @@ chrome.tabs.onActivated.addListener(function(info) {
 			chrome.tabs.reload();
 		}
 	});
-	
 });
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
@@ -38,7 +48,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(info) {
 //	console.log(info.tabId+' webrq: '+active);
 	if (!active)
 		return;
-	setTimeout(function(){active = false;}, 10000);
+	setTimeout(ftDeactivate, ftTimeout);
 	var tid = 't'+info.tabId;
 	if (tid == activated)
 		return;
@@ -61,7 +71,16 @@ chrome.webRequest.onBeforeRequest.addListener(function(info) {
 chrome.windows.onCreated.addListener(function(window)
 {
 //	console.log('create: '+active);
-	active = true;
+	chrome.storage.local.get(ftInactive, function(stor)
+	{
+//		console.log('got from storage: '+stor);
+		if (!stor[ftInactive])
+		{
+//			console.log('no inactive in store');
+			active = true;
+			setTimeout(ftDeactivate, ftTimeout);
+		}
+	});
 //	console.log('create: '+active);
 });
 

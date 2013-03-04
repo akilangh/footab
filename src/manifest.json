@@ -1,8 +1,8 @@
 {
   "name": "FooTab",
   "description": "BarTab inspired (but infinately more primitive) utility for blocking background tabs from killing Chrome on start.",
-  "version": "13.1.25",
-  "permissions": ["webRequest", "webRequestBlocking", "storage", "tabs", "http://*/*", "https://*/*"],
+  "version": "13.3.5",
+  "permissions": ["webRequest", "webRequestBlocking", "storage", "tabs", "*://*/*"],
   "background": {
     "scripts": ["background.js"]
   },
